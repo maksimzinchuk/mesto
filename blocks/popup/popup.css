@@ -1,0 +1,20 @@
+@import url(./__container/popup__container.css);
+@import url(./__close-button/popup__close-button.css);
+@import url(./__profile-label/popup__profile-label.css);
+@import url(./__profile-name/popup__profile-name.css);
+@import url(./__title/popup__title.css);
+@import url(./__save-button/popup__save-button.css);
+
+
+.popup {
+  
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+    
+    
+}

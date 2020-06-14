@@ -1,0 +1,31 @@
+.profile__label {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.22222222;
+    color: #FFFFFF;
+    max-width: 318px;
+    margin: 0px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+@media (max-width: 750px) {
+    .profile__label {
+        text-align: center;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile__label {
+        font-size: 4.5vw;
+
+    }
+}
+
+@media (max-width: 320px) {
+    .profile__label {
+         font-size: 14px;
+         line-height: 1.21428571;
+    }
+}

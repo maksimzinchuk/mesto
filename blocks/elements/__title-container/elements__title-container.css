@@ -1,0 +1,6 @@
+.elements__title-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 246px;
+    margin: 21px 15px 25px 21px;
+}
