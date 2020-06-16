@@ -1,15 +1,14 @@
-.popup__profile-label {
+@import url(./_label/popup__profile_label.css);
+@import url(./_name/popup__profile_name.css);
+
+.popup__profile {
     width: 358px;
-    height: 27.34px;
     border-style: none;
     border-bottom: 1px solid rgba(0,0,0,0.2);
-
-    margin: 0 auto 48px;
-    
 }
 
 @media (max-width: 358px) {
-    .popup__profile-label {
+    .popup__profile {
        width: 90vw; 
     }
 }

@@ -8,6 +8,9 @@
     margin: 0px;
     grid-column-start: 1;
     grid-column-end: 3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @media (max-width: 750px) {

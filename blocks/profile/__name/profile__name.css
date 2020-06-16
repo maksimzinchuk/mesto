@@ -6,6 +6,11 @@
     color: #FFFFFF;
     margin: 0;
     max-width: 295px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    
 }
 
 @media (max-width: 750px) {
