@@ -1,11 +1,11 @@
-@import url(./__container/popup__container.css);
-@import url(./__close-button/popup__close-button.css);
-@import url(./__profile/popup__profile.css);
-@import url(./__title/popup__title.css);
-@import url(./__save-button/popup__save-button.css);
+@import url(./__container/popupAdd__container.css);
+@import url(./__close-button/popupAdd__close-button.css);
+@import url(./__content/popupAdd__content.css);
+@import url(./__save-button/popupAdd__save-button.css);
+@import url(./__title/popupAdd__title.css);
 
 
-.popup {
+.popupAdd {
     /*здесь задается затемненный фон попапа*/
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -17,3 +17,5 @@
     transition: opacity 0.1s linear;
     pointer-events: none;
 }
+
+

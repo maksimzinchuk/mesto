@@ -1,0 +1,14 @@
+@import url(./_link/popupAdd__content_link.css);
+@import url(./_name/popupAdd__content_name.css);
+
+.popupAdd__content {
+    width: 358px;
+    border-style: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+@media (max-width: 510px) {
+    .popupAdd__content  {
+       width: 200px; 
+    }
+}

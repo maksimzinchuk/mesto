@@ -1,0 +1,17 @@
+@import url(./__container/image-preview__container.css);
+@import url(./__item/image-preview__item.css);
+@import url(./__title/image-preview__title.css);
+@import url(./__close-button/image-preview__close-button.css);
+
+.image-preview {
+    /*фон попапа*/
+    background-color: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.1s linear;
+    pointer-events: none;
+}

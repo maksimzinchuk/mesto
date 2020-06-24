@@ -1,0 +1,15 @@
+.elements__like_active {
+    background-image: url(./../../../../images/like_active.svg);
+    width: 20.76px;
+    height: 18.13px;
+    margin: 6px 7.24px 0 0;
+    outline: none;
+    border: none;
+    background-color: white;
+    transition: opacity ease-in 0.2s;
+}
+
+.elements__like_active:hover {
+    opacity: 0.6;
+    cursor: pointer;
+ }
