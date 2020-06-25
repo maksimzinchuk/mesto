@@ -1,4 +1,4 @@
-.popupAdd__container {
+.popup-add__container {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 510px) {
-    .popupAdd__container {
+    .popup-add__container {
         width: 240px;
         margin-top: auto;
     }

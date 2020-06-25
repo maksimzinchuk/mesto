@@ -1,4 +1,4 @@
-.popupAdd__content_name {
+.popup-add__content_name {
     height: 27.26px;
     margin: 0 auto 29.74px;
     padding: 0;
@@ -6,7 +6,7 @@
 
 
 @media (max-width: 510px) {
-    .popupAdd__content_name {
+    .popup-add__content_name {
        margin: 0 auto 20px; 
     }
 }

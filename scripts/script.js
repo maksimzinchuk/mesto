@@ -2,10 +2,10 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const popupCloseButton = document.querySelector('.popup__close-button');
 
 const AddButton = document.querySelector('.profile__add-button');
-const popupAddCloseButton = document.querySelector('.popupAdd__close-button');
+const popupAddCloseButton = document.querySelector('.popup-add__close-button');
 
 const popup = document.querySelector('.popup'); 
-const popupAdd = document.querySelector('.popupAdd'); 
+const popupAdd = document.querySelector('.popup-add'); 
 
 const likeButton = document.querySelector('.elements__like');
 
@@ -24,15 +24,15 @@ let UserNameEdit = document.querySelector('.popup__profile_name');
 let UserLabelEdit = document.querySelector('.popup__profile_label');
 
 //переменные для попапа добавления фото
-const CardTitleNew = document.querySelector('.popupAdd__content_name');
-const CardLinkNew = document.querySelector('.popupAdd__content_link');
+const CardTitleNew = document.querySelector('.popup-add__content_name');
+const CardLinkNew = document.querySelector('.popup-add__content_link');
 
 //форма попапа профиля
 let formElement = document.querySelector('.popup__container');
 const popupSaveButton = formElement.querySelector('.popup__save-button');
 
 //форма попапа добавления фото
-let AddFormElement = document.querySelector('.popupAdd__container');
+let AddFormElement = document.querySelector('.popup-add__container');
 
 //открытие попапа
 function popupOpen() {
@@ -45,35 +45,38 @@ profileEditButton.addEventListener('click', popupOpen);
 //закрытие попапа
 function popupClose() { 
     popup.classList.remove('popup__opened');
+   
 }
 popupCloseButton.addEventListener('click', popupClose);
 
 //отправка формы
 function formSubmitHandler (evt) {
     evt.preventDefault();
+     //если поля не заполнены - не делаем ничего
+    if (UserNameEdit.value === '') {
+        return false;
+    }
+
     UserName.textContent = UserNameEdit.value;
     UserLabel.textContent = UserLabelEdit.value;
+
     popupClose();
 }
 formElement.addEventListener('submit', formSubmitHandler);
 
-
 //popup добавления фото
 function popupAddOpen() {
-    popupAdd.classList.toggle('popupAdd__opened');
-    
+    popupAdd.classList.toggle('popup-add__opened');
 }
 AddButton.addEventListener('click', popupAddOpen);
 
 function popupAddClose() { 
-    popupAdd.classList.remove('popupAdd__opened');
+    popupAdd.classList.remove('popup-add__opened');
     //обнуляем поля ввода
     CardTitleNew.value = null;
     CardLinkNew.value = null;
-
 }
 popupAddCloseButton.addEventListener('click', popupAddClose);
-
 
 //массив катрочек с фото
 const initialCards = [
@@ -126,7 +129,6 @@ function CardsAdd() {
           //подключаем функцию лайков 
           like(CardsElement);
 
-
           //подключаем удаление элементов
           cardDelete(CardsElement);
 
@@ -159,7 +161,6 @@ function CardsAddNew(evt) {
     if (CardTitleNew.value === '' || CardLinkNew.value === '') {
         return false;
     }
-
 
     //подключаем удаление элементов
     cardDelete(NewCards);
@@ -223,7 +224,6 @@ function previewOpen(imageValue, titleValue) {
         //создаем переменную с названием картинки из константы imageTitle
         let previewImageTitle = document.querySelector('.image-preview__title');
         previewImageTitle.textContent = imageTitle.textContent;
-       
     });
 }
 

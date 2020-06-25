@@ -1,4 +1,4 @@
-.popupAdd__save-button {
+.popup-add__save-button {
     width: 358px;
     height: 50.15px;
     background: #000000;
@@ -16,13 +16,13 @@
     outline: none;
 }
 
-.popupAdd__save-button:hover {
+.popup-add__save-button:hover {
     opacity: 0.8;
     cursor: pointer;
 }
 
 @media (max-width: 510px) {
-    .popupAdd__save-button {
+    .popup-add__save-button {
        width: 200px; 
     }
 }
