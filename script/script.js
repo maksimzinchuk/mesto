@@ -156,14 +156,10 @@ function CardsAddNew(evt) {
     NewCardImage.alt = CardTitleNew.value;  
 
     //если поля не заполнены - не делаем ничего
-    if (CardTitleNew.value === '') {
+    if (CardTitleNew.value === '' || CardLinkNew.value === '') {
         return false;
     }
 
-    if (CardLinkNew.value === '') {
-        return false;
-    }
-  
 
     //подключаем удаление элементов
     cardDelete(NewCards);
