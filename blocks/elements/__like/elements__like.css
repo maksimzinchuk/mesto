@@ -3,7 +3,9 @@
     background-repeat: no-repeat;
     width: 20.76px;
     height: 18.13px;
-    margin: 6px 7.24px 0 0;
+    margin: 0;
+    padding: 0;
+    align-self: center;
     outline: none;
     border: none;
     background-color: white;
