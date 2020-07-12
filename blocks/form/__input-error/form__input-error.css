@@ -12,3 +12,9 @@
    
     
 }
+
+@media (max-width: 510px) {
+    .form__input-error {
+        left: 20px;
+    }
+}
