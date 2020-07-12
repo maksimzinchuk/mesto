@@ -18,65 +18,112 @@ const popupPreview = document.querySelector('.image-preview');
 const popupPreviewCloseButton = document.querySelector('.image-preview__close-button');
 
 //переменные для попапа профиля
-let userName = document.querySelector('.profile__name');
-let userLabel = document.querySelector('.profile__label');
-let userNameEdit = document.querySelector('.popup__profile_name');
-let userLabelEdit = document.querySelector('.popup__profile_label');
+const userName = document.querySelector('.profile__name');
+const userLabel = document.querySelector('.profile__label');
+const userNameEdit = document.querySelector('.popup__profile_name');
+const userLabelEdit = document.querySelector('.popup__profile_label');
 
 //переменные для попапа добавления фото
 const cardTitleNew = document.querySelector('.popup-add__content_name');
 const cardLinkNew = document.querySelector('.popup-add__content_link');
 
 //форма попапа профиля
-let formElement = document.querySelector('.popup__container');
-const popupSaveButton = formElement.querySelector('.popup__save-button');
+const formElement = document.querySelector('.popup__container');
 
 //форма попапа добавления фото
-let addFormElement = document.querySelector('.popup-add__container');
+const addFormElement = document.querySelector('.popup-add__container');
 
-//открытие попапа
-function popupOpen() {
-    popup.classList.toggle('popup__opened');
+//функция открытия и закрытия всех попапов
+const popupOpenClose = (modal) => {
+    modal.classList.toggle('popup__opened');
+    popupClose();
+    popupAddClose();
+    popupOverlayClose(modal);
+    if (modal.classList.contains('popup__opened')) {
+        document.addEventListener('keydown', popupCloseEsc);
+    }
+    else {
+        document.removeEventListener('keydown', popupCloseEsc);
+    }
+};
+
+//функция закрытия попапа по нажатию ESC
+const popupCloseEsc = (evt) => {
+    if (evt.key === 'Escape') {
+        const popupOpened = document.querySelector('.popup__opened');
+        popupOpenClose(popupOpened);
+    }
+};
+
+//функция закрытия по нажатию на оверлей
+const popupOverlayClose = (modal) => {
+    modal.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup__opened')) {
+            popupOpenClose(modal);
+        }
+    });
+};
+
+//открываем попап редактирования профиля и заполняем поля
+profileEditButton.addEventListener('click', () => {
     userNameEdit.value = userName.textContent;
-    userLabelEdit.value = userLabel.textContent;
-}
-profileEditButton.addEventListener('click', popupOpen);
+    userLabelEdit.value = userLabel.textContent; 
 
-//закрытие попапа
-function popupClose() { 
-    popup.classList.remove('popup__opened');
-   
+    //сделаем кнопку активной в этом попапе при загрузке
+    //найдем в текущей форме кнопку submit формы
+    
+    //удалим класс неактивной кнопки
+    setSubmitButtonState(true, popup);
+    //откроем попап
+    popupOpenClose(popup);
+
+});
+
+//функция задает начальные значения кнопок submit 
+function setSubmitButtonState(isFormValid, formEntity) {
+    const buttonElement = formEntity.querySelector('.form__submit');
+    if (isFormValid) {
+        buttonElement.removeAttribute('disabled');
+        buttonElement.classList.remove('form__submit_inactive');
+    }
+    else {
+        buttonElement.setAttribute('disabled', true);
+        buttonElement.classList.add('form__submit_inactive');
+  }
 }
-popupCloseButton.addEventListener('click', popupClose);
+
+//закрываем попап редактирования профиля
+function popupClose() {
+  
+    popupCloseButton.addEventListener('click', () => {
+        popupOpenClose(popup);
+    });
+}
+
+//открываем попап добавления фото
+addButton.addEventListener('click', () => {
+    popupOpenClose(popupAdd);
+});
+
+//закрываем попап добавления фото
+function popupAddClose() {
+    popupAddCloseButton.addEventListener('click', () => {
+        cardTitleNew.value = null;
+        cardLinkNew.value = null;
+        popupOpenClose(popupAdd);
+    });
+}
 
 //отправка формы
 function formSubmitHandler (evt) {
     evt.preventDefault();
-     //если поля не заполнены - не делаем ничего
-    if (userNameEdit.value === '' || userLabelEdit.value === '') {
-        return false;
-    }
-
     userName.textContent = userNameEdit.value;
     userLabel.textContent = userLabelEdit.value;
-
-    popupClose();
+    //закроем попап
+    popupOpenClose(popup);
 }
 formElement.addEventListener('submit', formSubmitHandler);
 
-//popup добавления фото
-function popupAddOpen() {
-    popupAdd.classList.toggle('popup-add__opened');
-}
-addButton.addEventListener('click', popupAddOpen);
-
-function popupAddClose() { 
-    popupAdd.classList.remove('popup-add__opened');
-    //обнуляем поля ввода
-    cardTitleNew.value = null;
-    cardLinkNew.value = null;
-}
-popupAddCloseButton.addEventListener('click', popupAddClose);
 
 //массив катрочек с фото
 const initialCards = [
@@ -106,79 +153,65 @@ const initialCards = [
     }
 ];
 
-//достаем имя карточки из массива и записываем в CardsName
-const cardsName = initialCards.map(cardname => cardname.name);
-//достаем ссылку на картинку из массива и записываем в CardsLink
-const cardsLink = initialCards.map(cardlink => cardlink.link);
+function buildTemplate(cardName, cardLink) {
+    //копируем template
+    const cardElement = cards.cloneNode(true); 
+    //title и image заносим в переменные
+    const cardTitle = cardElement.querySelector('.elements__title');
+    const cardImage = cardElement.querySelector('.elements__image');
+    
+    //записываем данные, переданные в аргументах, в шаблон(название, ссылка на картинку и ее alt)
+    cardTitle.textContent = cardName;
+    cardImage.src = cardLink;
+    cardImage.alt = cardName;
+    
+    //подключаем к шаблону лайки, кнопку удаления и превью
+    like(cardElement);
+    cardDelete(cardElement);
+    previewOpen(cardImage, cardTitle);
 
-//функция отображает карточки и подтягивает информацию из массива initialCards
-function addCards() {
-    for (let i = 0; i < initialCards.length; i++) {
-        //копируем template
-          const cardsElement = cards.cloneNode(true);
-          let cardsElementImage = cardsElement.querySelector('.elements__image');
-          let cardsElementTitle = cardsElement.querySelector('.elements__title');
-
-          //записываем адрес картинки в img src и название в h2
-          cardsElementImage.src = cardsLink[i];
-          cardsElementTitle.textContent = cardsName[i];   
-
-          //записываем параметр alt в image
-           cardsElement.querySelector('.elements__image').alt = cardsName[i];  
-      
-          //подключаем функцию лайков 
-          like(cardsElement);
-
-          //подключаем удаление элементов
-          cardDelete(cardsElement);
-
-          //подключаем превью
-          previewOpen(cardsElementImage, cardsElementTitle);
-
-          //отображаем
-          cardsSection.append(cardsElement); 
-    }; 
+    //отправляем готовую карточку в renderCards для отрисовки
+    renderCards(cardElement)
 }
-addCards();
 
-//добавляем новые карточки
+//функция перебирает массив и создает карточки
+ function buildCards() {
+   //  перебираем массив initialCards и для каждого элемента---
+     initialCards.forEach((card) => {
+     //вытаскиваем имя и ссылку
+     const cardName = card.name;
+     const cardLink = card.link;
+     
+     //отправляем значения cardName и cardLink в функцию построения карточки
+     buildTemplate(cardName, cardLink);
+     });  
+ }
+ buildCards();
 
+//сборка новой карточки с фото
 function addNewCards(evt) {
     evt.preventDefault();
-    //клонируем template для новой карточки
-   const newCards = cards.cloneNode(true);
-   let newCardImage = newCards.querySelector('.elements__image');
-   let newCardTitle = newCards.querySelector('.elements__title');
 
-    //записываем введенные значения в новую карточку
-    newCardImage.src = cardLinkNew.value;
-    newCardTitle.textContent = cardTitleNew.value;   
+   //отправляем введенные в инпуты значения в функцию построения карточки
+    buildTemplate(cardTitleNew.value, cardLinkNew.value)
 
-    //записываем параметр alt в image
-    newCardImage.alt = cardTitleNew.value;  
+    //сбрасываем форму
+    addFormElement.reset();
 
-    //если поля не заполнены - не делаем ничего
-    if (cardTitleNew.value === '' || cardLinkNew.value === '') {
-        return false;
-    }
-
-    //подключаем удаление элементов
-    cardDelete(newCards);
-
-    //подключаем функцию лайков 
-    like(newCards);
-
-    //подключаем превью
-    previewOpen(newCardImage, newCardTitle);
-
-    //отображаем
-    cardsSection.prepend(newCards); 
+    //делаем кнопку неактивной
+    setSubmitButtonState(false, popupAdd);
    
     //выключаем попап
-    popupAddClose();
+    popupOpenClose(popupAdd);
 }
 addFormElement.addEventListener('submit', addNewCards);
 
+
+//отображение карточек
+function renderCards(card)  {
+     //отображаем карточки 
+     cardsSection.prepend(card); 
+}
 
 // функция лайков
 function like(value) {
@@ -188,14 +221,13 @@ function like(value) {
       });
 }
 
-
 //удаление карточек
 function cardDelete(value) {
     //выбираем trash в template
     const deleteButton = value.querySelector('.elements__trash');
 
     //добавляем слушатель на trash
-    deleteButton.addEventListener('click', function (evt) {
+    deleteButton.addEventListener('click', function (_evt) {
         //выбираем ближайший родительский элемент к trash
         const deleteItem = deleteButton.closest('.elements__item');
         //удаляем его
@@ -203,32 +235,30 @@ function cardDelete(value) {
     });
 }
 
-
 //превью
-
 //открываем превью
-
 function previewOpen(imageValue, titleValue) {
     //создаем константу с содержимым тега img в elements__item
     const imageSource = imageValue;
     //создаем константу с содержимым тега h2 в elements__item
     const imageTitle = titleValue;
 
-    imageSource.addEventListener('click', function() {
-        popupPreview.classList.toggle('image-preview__opened');
-        
+     imageSource.addEventListener('click', function() {
+         
+         //откроем превью
+        popupOpenClose(popupPreview);
         //создаем переменную, куда записывается новый src картинки из константы imageSource
         let previewImageSrc = document.querySelector('.image-preview__item');
-        previewImageSrc.src = imageSource.src;
+         previewImageSrc.src = imageSource.src;
         
-        //создаем переменную с названием картинки из константы imageTitle
-        let previewImageTitle = document.querySelector('.image-preview__title');
-        previewImageTitle.textContent = imageTitle.textContent;
-    });
+         //создаем переменную с названием картинки из константы imageTitle
+         let previewImageTitle = document.querySelector('.image-preview__title');
+         previewImageTitle.textContent = imageTitle.textContent;
+     });
 }
 
 //закрываем превью
 function popupPreviewClose() { 
-    popupPreview.classList.remove('image-preview__opened');
+    popupOpenClose(popupPreview);
 }
 popupPreviewCloseButton.addEventListener('click', popupPreviewClose);

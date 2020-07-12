@@ -19,11 +19,11 @@
 
             <div class="profile__info">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button" type="button"></button>
+                <button class="profile__edit-button profile__reset" type="button"></button>
                 <p class="profile__label">Исследователь океана</p>
             </div>
          
-            <button class="profile__add-button" type="button"></button>
+            <button class="profile__add-button profile__reset" type="button"></button>
         </section>
       
         <section class="elements">
@@ -31,33 +31,38 @@
         </section>
    </main>
 
-   <div class="popup">
+    <div class="popup popup__reset">
     
-       <form class="popup__container" name="form">
-        <button class="popup__close-button" type="button"></button>
+      <form class="popup__container form" name="form" novalidate>
+            <button class="popup__close-button" type="button"></button>
            
-           <h2 class="popup__title">Редактировать профиль</h2>
-        
-           <input class="popup__profile popup__profile_name" name="name">
-           <input class="popup__profile popup__profile_label" name="label">
-           
-           <button class="popup__save-button">Сохранить</button>
-
-       </form>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <div class="form__field">
+                 <input class="popup__profile popup__profile_name form__input" name="name" minlength="2" maxlength="40" required>
+                 <span class="form__input-error"></span>
+            </div>
+            <div class="form__field">
+                 <input class="popup__profile popup__profile_label form__input" minlength="2" maxlength="200" name="label" required>
+                 <span class="form__input-error"></span>
+            </div>
+            <button class="popup__save-button form__submit">Сохранить</button>
+      </form>
    </div>
 
-   <div class="popup-add">
+   <div class="popup-add popup__reset">
     
-         <form class="popup-add__container" name="addform">
-            <button class="popup-add__close-button" type="button"></button>
-        
-             <h2 class="popup-add__title">Новое место</h2>
-     
-             <input class="popup-add__content popup-add__content_name" name="title" placeholder="Название">
-             <input class="popup-add__content popup-add__content_link" name="link" placeholder="Ссылка на картинку">
-        
-             <button class="popup-add__save-button">Создать</button>
-
+         <form class="popup-add__container form" name="addform" novalidate>
+              <button class="popup-add__close-button" type="button"></button>
+              <h2 class="popup-add__title">Новое место</h2>
+                    <div class="form__field">
+                         <input class="popup-add__content popup-add__content_name form__input" name="title" placeholder="Название" minlength="1" maxlength="30" required>
+                         <span class="form__input-error"></span>
+                    </div>
+                    <div class="form__field">
+                         <input class="popup-add__content popup-add__content_link form__input" name="link" placeholder="Ссылка на картинку" type="url" required>
+                         <span class="form__input-error"></span>
+                    </div>
+             <button class="popup-add__save-button form__submit">Создать</button>
          </form>
 
     </div>
@@ -89,5 +94,6 @@
 </template>
 
 <script src="./scripts/script.js"></script>
+<script src="./scripts/validate.js"></script>
 </body>
 </html>

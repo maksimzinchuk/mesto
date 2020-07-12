@@ -7,8 +7,8 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup-add/popup-add.css);
+@import url(../blocks/form/form.css);
 @import url(../blocks/image-preview/image-preview.css);
 @import url(../blocks/popup/__opened/popup__opened.css);
-@import url(../blocks/popup-add/__opened/popup-add__opened.css);
-@import url(../blocks/image-preview/__opened/image-preview__opened.css);
 @import url(../blocks/elements/__like/_active/elements__like_active.css);
+@import url(../blocks/form/__input-error/_active/form__input-error_active.css);
