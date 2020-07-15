@@ -265,10 +265,8 @@ addButton.addEventListener('click', () => {
     popupOverlayClose(popupAdd);
 });
 
-//закрываем попап добавления фото и обнуляем инпуты
+//закрываем попап добавления фото
 popupAddCloseButton.addEventListener('click', () => {
-        cardTitleNew.value = null;
-        cardLinkNew.value = null;
         popupClose(popupAdd);
     });
 
