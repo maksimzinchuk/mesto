@@ -1,5 +1,5 @@
 //эта функция удаляет ошибки, если пользователь закрывает попап
-function hidePopupErrors(formList, {inputSelector, fieldSelector, inputErrorClass, errorClass}) {
+const hidePopupErrors = (formList, {inputSelector, fieldSelector, inputErrorClass, errorClass}) => {
     //создаем массив их кнопок, открывающих попап
     const profileButtons = Array.from(document.querySelectorAll('.profile__reset'));
     //проходимся пр массиву кнопок
