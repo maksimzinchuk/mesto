@@ -1,3 +1,8 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import { popupPreviewClose } from './utils.js';
+import { config } from './config.js'
+
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupCloseButton = document.querySelector('.popup__close-button');
 
@@ -7,14 +12,8 @@ const popupAddCloseButton = document.querySelector('.popup-add__close-button');
 const popup = document.querySelector('.popup'); 
 const popupAdd = document.querySelector('.popup-add'); 
 
-const likeButton = document.querySelector('.elements__like');
-
-//для отображения картинок из массива
-const cards = document.querySelector('#cards').content;
- const cardsSection = document.querySelector('.elements');
-
 //для превью
-const popupPreview = document.querySelector('.image-preview');
+
 const popupPreviewCloseButton = document.querySelector('.image-preview__close-button');
 
 //переменные для попапа профиля
@@ -63,15 +62,27 @@ const initialCards = [
 
 //объявляем функции
 
+
+//подключаем валидацию форм
+(function validationEnable() {
+    //подключим валидацию профиля
+    const editFormValidation = new FormValidator(config, formElement);
+    editFormValidation.enableValidation();
+    //подключим валидацию добавления фото
+    const addFormValidation = new FormValidator(config, addFormElement);
+    addFormValidation.enableValidation();
+})();
+
+
 //функция открытия попапа
-function popupOpen(modal) {
+export function popupOpen(modal) {
     modal.classList.add('popup__opened');
   
     document.addEventListener('keydown', popupCloseEsc);   
 }
 
 //функция закрытия попапа
-function popupClose(modal) {
+export function popupClose(modal) {
     modal.classList.remove('popup__opened');
 
     document.removeEventListener('keydown', popupCloseEsc);
@@ -88,42 +99,13 @@ function popupCloseEsc(evt) {
 }
 
 //функция закрытия по нажатию на оверлей
-function popupOverlayClose(modal) {
+export function popupOverlayClose(modal) {
     modal.addEventListener('click', (evt) => {
         if (evt.target.classList.contains('popup__opened')) {
             popupClose(modal);
         }
     });
 };
-
-//попап превью
-//открываем превью
-function previewOpen(imageValue, titleValue) {
-    //создаем константу с содержимым тега img в elements__item
-    const imageSource = imageValue;
-    //создаем константу с содержимым тега h2 в elements__item
-    const imageTitle = titleValue;
-
-     imageSource.addEventListener('click', function() {
-         
-         //откроем превью
-        popupOpen(popupPreview);
-        //добавим закрытие по оверлею
-        popupOverlayClose(popupPreview);
-        //создаем переменную, куда записывается новый src картинки из константы imageSource
-         const previewImageSrc = document.querySelector('.image-preview__item');
-         previewImageSrc.src = imageSource.src;
-        
-         //создаем переменную с названием картинки из константы imageTitle
-         const previewImageTitle = document.querySelector('.image-preview__title');
-         previewImageTitle.textContent = imageTitle.textContent;
-     });
-}
-
-//закрываем превью
-function popupPreviewClose() { 
-    popupClose(popupPreview);
-}
 
 //функция задает начальные значения кнопок submit 
 function setSubmitButtonState(isFormValid, formEntity) {
@@ -138,73 +120,34 @@ function setSubmitButtonState(isFormValid, formEntity) {
   }
 }
 
-//функция отправки формы профиля
+//функция заполнения формы профиля
 function profileForm (evt) {
     evt.preventDefault();
+     
     userName.textContent = userNameEdit.value;
     userLabel.textContent = userLabelEdit.value;
+   
+
     //закроем попап
     popupClose(popup);
-}
-
-// функция лайков
-function like(value) {
-    //передаем value, чтоб лайки работали в копировании template
-    value.querySelector('.elements__like').addEventListener('click', function (evt) {
-        evt.target.classList.toggle('elements__like_active');
-      });
-}
-
-//удаление карточек
-function cardDelete(value) {
-    //выбираем trash в template
-    const deleteButton = value.querySelector('.elements__trash');
-
-    //добавляем слушатель на trash
-    deleteButton.addEventListener('click', function (_evt) {
-        //выбираем ближайший родительский элемент к trash
-        const deleteItem = deleteButton.closest('.elements__item');
-        //удаляем его
-        deleteItem.remove();
-    });
-}
-
-//функция возвращает готовые карточки, которые она создает из template
-function buildTemplate(cardName, cardLink) {
-    //копируем template
-    const cardElement = cards.cloneNode(true); 
-    //title и image заносим в переменные
-    const cardTitle = cardElement.querySelector('.elements__title');
-    const cardImage = cardElement.querySelector('.elements__image');
-    
-    //записываем данные, переданные в аргументах, в шаблон(название, ссылка на картинку и ее alt)
-    cardTitle.textContent = cardName;
-    cardImage.src = cardLink;
-    cardImage.alt = cardName;
-    
-    //подключаем к шаблону лайки, кнопку удаления и превью
-    like(cardElement);
-    cardDelete(cardElement);
-    previewOpen(cardImage, cardTitle);
-
-    //возвращаем готовую карточку
-    return cardElement;
-}
-
-//отображение карточек
-function renderCards(section, cards)  {
-    section.prepend(cards);
 }
 
 //сборка новой карточки с фото
 function addNewCards(evt) {
     evt.preventDefault();
+    const newCard = 
+        {
+        name: cardTitleNew.value,
+        link: cardLinkNew.value
+    };
 
-   //отправляем введенные в инпуты значения в функцию построения карточки
-    const cards = buildTemplate(cardTitleNew.value, cardLinkNew.value)
-   //и отображаем их
-    renderCards(cardsSection, cards);
-   
+    //создаем новую карточку из класса Card
+    const card = new Card(newCard, '.cards');
+    //гененрируем готовую карточку
+    const cardElement = card.generateCard();
+    //отображаем
+    document.querySelector('.elements').prepend(cardElement);
+
     //выключаем попап
     popupClose(popupAdd);
 }
@@ -212,16 +155,14 @@ function addNewCards(evt) {
 //функция перебирает массив и создает карточки
 function buildCardsFromArray() {
     //  перебираем массив initialCards и для каждого элемента---
-      initialCards.forEach((card) => {
-      //вытаскиваем имя и ссылку
-      const cardName = card.name;
-      const cardLink = card.link;
-     
-      //отправляем значения cardName и cardLink в функцию построения карточки
-      const cards = buildTemplate(cardName, cardLink);
-      //и отображаем их
-      renderCards(cardsSection, cards);
-      });    
+    initialCards.forEach((item) => {
+        //создаем новую карточку из класса Card
+        const card = new Card(item, '.cards');
+        //гененрируем готовую карточку
+        const cardElement = card.generateCard();
+        //отображаем
+        document.querySelector('.elements').append(cardElement);
+    });
   }
 
 

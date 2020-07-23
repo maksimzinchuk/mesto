@@ -31,7 +31,7 @@
         </section>
    </main>
 
-    <div class="popup popup__reset">
+    <div class="popup">
     
       <form class="popup__container form" name="form" novalidate>
             <button class="popup__close-button" type="button"></button>
@@ -49,7 +49,7 @@
       </form>
    </div>
 
-   <div class="popup-add popup__reset">
+   <div class="popup-add">
     
          <form class="popup-add__container form" name="addform" novalidate>
               <button class="popup-add__close-button" type="button"></button>
@@ -81,7 +81,7 @@
     </footer>
 </div>
 
-<template id="cards">
+<template class="cards">
     <div class="elements__item">
         
         <img src="#" class="elements__image" alt="#">
@@ -93,7 +93,10 @@
     </div>  
 </template>
 
-<script src="./scripts/index.js"></script>
-<script src="./scripts/validate.js"></script>
+<script type="module" src="./scripts/index.js"></script>
+<script type="module" src="./scripts/FormValidator.js"></script>
+<script type="module" src="./scripts/Card.js"></script>
+<script type="module" src="./scripts/utils.js"></script>
+<script type="module" src="./scripts/config.js"></script>
 </body>
 </html>
