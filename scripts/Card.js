@@ -44,13 +44,15 @@ export default class Card {
     generateCard() {
         //запишем разметку в приватное поле _element для доступа других элементов
         this._element = this._getTemplate();
+        //найдем в DOM elements__image
+        const elementsImage = this._element.querySelector('.elements__image');
         //добавим обработчики событий
         this._setEventListeners();
 
-        //заносим даныые
+        //заносим данные
         this._element.querySelector('.elements__title').textContent = this._name;
-        this._element.querySelector('.elements__image').src = this._link;
-        this._element.querySelector('.elements__image').alt = this._name;
+        elementsImage.src = this._link;
+        elementsImage.alt = this._name;
 
         //вернем готовый элемент
         return this._element;

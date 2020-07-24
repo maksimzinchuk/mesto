@@ -1,5 +1,5 @@
 //конфиг настроек с селекторами
-export const config = {
+export const validationConfig = {
     fieldSelector: '.form__field',
     inputSelector: '.form__input',
     submitButtonSelector: '.popup__button',

@@ -1,7 +1,8 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import { popupPreviewClose, popupOpen, popupClose, popupOverlayClose } from './utils.js';
-import { config } from './config.js'
+import { validationConfig } from './config.js'
+import { initialCards } from './initial-cards.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupCloseButton = document.querySelector('.popup__close-button');
@@ -26,50 +27,24 @@ const userLabelEdit = document.querySelector('.popup__profile_label');
 const cardTitleNew = document.querySelector('.popup-add__content_name');
 const cardLinkNew = document.querySelector('.popup-add__content_link');
 
+//переменная для поиска секции elements для добавления новых фото
+const elementsSection = document.querySelector('.elements');
+
 //форма попапа профиля
 const formElement = document.querySelector('.popup__container');
 
 //форма попапа добавления фото
 const addFormElement = document.querySelector('.popup-add__container');
 
-//массив катрочек с фото
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
 //объявляем функции
 
-
 //подключаем валидацию форм
-(function validationEnable() {
+(function enableValidation() {
     //подключим валидацию профиля
-    const editFormValidation = new FormValidator(config, formElement);
+    const editFormValidation = new FormValidator(validationConfig, formElement);
     editFormValidation.enableValidation();
     //подключим валидацию добавления фото
-    const addFormValidation = new FormValidator(config, addFormElement);
+    const addFormValidation = new FormValidator(validationConfig, addFormElement);
     addFormValidation.enableValidation();
 })();
 
@@ -112,7 +87,7 @@ function addNewCards(evt) {
     //гененрируем готовую карточку
     const cardElement = card.generateCard();
     //отображаем
-    document.querySelector('.elements').prepend(cardElement);
+    elementsSection.prepend(cardElement);
 
     //выключаем попап
     popupClose(popupAdd);
@@ -127,10 +102,9 @@ function buildCardsFromArray() {
         //гененрируем готовую карточку
         const cardElement = card.generateCard();
         //отображаем
-        document.querySelector('.elements').append(cardElement);
+        elementsSection.append(cardElement);
     });
-  }
-
+}
 
 //теперь идут вызовы функций
 //вызов функции построения карточкек и массива initialCards
