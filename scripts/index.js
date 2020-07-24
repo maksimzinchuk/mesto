@@ -1,6 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import { popupPreviewClose } from './utils.js';
+import { popupPreviewClose, popupOpen, popupClose, popupOverlayClose } from './utils.js';
 import { config } from './config.js'
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -72,40 +72,6 @@ const initialCards = [
     const addFormValidation = new FormValidator(config, addFormElement);
     addFormValidation.enableValidation();
 })();
-
-
-//функция открытия попапа
-export function popupOpen(modal) {
-    modal.classList.add('popup__opened');
-  
-    document.addEventListener('keydown', popupCloseEsc);   
-}
-
-//функция закрытия попапа
-export function popupClose(modal) {
-    modal.classList.remove('popup__opened');
-
-    document.removeEventListener('keydown', popupCloseEsc);
-}
-
-//функция закрытия попапа по нажатию ESC
-function popupCloseEsc(evt) {
-    if (evt.key !== 'Escape') {
-        return;
-    }
-
-    const popupOpened = document.querySelector('.popup__opened');
-    popupClose(popupOpened);
-}
-
-//функция закрытия по нажатию на оверлей
-export function popupOverlayClose(modal) {
-    modal.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup__opened')) {
-            popupClose(modal);
-        }
-    });
-};
 
 //функция задает начальные значения кнопок submit 
 function setSubmitButtonState(isFormValid, formEntity) {

@@ -1,5 +1,3 @@
-import { popupOpen, popupClose, popupOverlayClose } from './index.js';
-
 //для превью
 const popupPreview = document.querySelector('.image-preview');
 
@@ -22,4 +20,37 @@ export function previewOpen(imageValue, titleValue) {
 //закрываем превью
 export function popupPreviewClose() { 
 popupClose(popupPreview);
+}
+
+//функция открытия попапа
+export function popupOpen(modal) {
+    modal.classList.add('popup__opened');
+  
+    document.addEventListener('keydown', popupCloseEsc);   
+}
+
+//функция закрытия попапа
+export function popupClose(modal) {
+    modal.classList.remove('popup__opened');
+
+    document.removeEventListener('keydown', popupCloseEsc);
+}
+
+//функция закрытия по нажатию на оверлей
+export function popupOverlayClose(modal) {
+    modal.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup__opened')) {
+            popupClose(modal);
+        }
+    });
+};
+
+//функция закрытия попапа по нажатию ESC
+function popupCloseEsc(evt) {
+    if (evt.key !== 'Escape') {
+        return;
+    }
+
+    const popupOpened = document.querySelector('.popup__opened');
+    popupClose(popupOpened);
 }
