@@ -1,6 +1,8 @@
 import Card from './Card.js';
+import Section from './Section.js'
+import Popup from './Popup.js'
 import FormValidator from './FormValidator.js';
-import { popupPreviewClose, popupOpen, popupClose, popupOverlayClose } from './utils.js';
+import { popupPreviewClose} from './utils.js';
 import { validationConfig } from './config.js'
 import { initialCards } from './initial-cards.js';
 
@@ -10,8 +12,8 @@ const popupCloseButton = document.querySelector('.popup__close-button');
 const addButton = document.querySelector('.profile__add-button');
 const popupAddCloseButton = document.querySelector('.popup-add__close-button');
 
-const popup = document.querySelector('.popup'); 
-const popupAdd = document.querySelector('.popup-add'); 
+const popup = '.popup'; 
+const popupAdd = '.popup-add'; 
 
 //для превью
 
@@ -28,7 +30,7 @@ const cardTitleNew = document.querySelector('.popup-add__content_name');
 const cardLinkNew = document.querySelector('.popup-add__content_link');
 
 //переменная для поиска секции elements для добавления новых фото
-const elementsSection = document.querySelector('.elements');
+const elementsSection = '.elements';
 
 //форма попапа профиля
 const formElement = document.querySelector('.popup__container');
@@ -50,7 +52,10 @@ const addFormElement = document.querySelector('.popup-add__container');
 
 //функция задает начальные значения кнопок submit 
 function setSubmitButtonState(isFormValid, formEntity) {
-    const buttonElement = formEntity.querySelector('.form__submit');
+    // console.log(document.querySelector(formEntity).closest('form__submit'))
+    const formElement = document.querySelector(formEntity)
+    const buttonElement = formElement.querySelector('.form__submit');
+
     if (isFormValid) {
         buttonElement.removeAttribute('disabled');
         buttonElement.classList.remove('form__submit_inactive');
@@ -73,42 +78,41 @@ function profileForm (evt) {
     popupClose(popup);
 }
 
-//сборка новой карточки с фото
-function addNewCards(evt) {
-    evt.preventDefault();
-    const newCard = 
-        {
-        name: cardTitleNew.value,
-        link: cardLinkNew.value
-    };
 
-    //создаем новую карточку из класса Card
-    const card = new Card(newCard, '.cards');
-    //гененрируем готовую карточку
-    const cardElement = card.generateCard();
-    //отображаем
-    elementsSection.prepend(cardElement);
+function addNewCards(newCard) {
+        const cardItem = new Section({items: newCard, renderer: (item) => {
 
-    //выключаем попап
-    popupClose(popupAdd);
-}
-
-//функция перебирает массив и создает карточки
-function buildCardsFromArray() {
-    //  перебираем массив initialCards и для каждого элемента---
-    initialCards.forEach((item) => {
-        //создаем новую карточку из класса Card
         const card = new Card(item, '.cards');
         //гененрируем готовую карточку
         const cardElement = card.generateCard();
         //отображаем
-        elementsSection.append(cardElement);
-    });
+        cardItem.addItem(cardElement);
+        
+        //выключаем попап
+        popupClose(popupAdd);
+        
+}
+}, elementsSection);
+
+ cardItem.renderItems();
+
 }
 
 //теперь идут вызовы функций
 //вызов функции построения карточкек и массива initialCards
-buildCardsFromArray();
+// buildCardsFromArray();
+const buildCardsFromArray = new Section({items: initialCards, renderer: (item) => {
+    //создаем новую карточку из класса Card
+        const card = new Card(item, '.cards');
+        //гененрируем готовую карточку
+        const cardElement = card.generateCard();
+        //отображаем
+        buildCardsFromArray.addItem(cardElement);
+        
+    }
+}, elementsSection)
+
+buildCardsFromArray.renderItems();
 
 //а теперь обработчики событий
 //открываем попап редактирования профиля и заполняем поля
@@ -122,17 +126,22 @@ profileEditButton.addEventListener('click', () => {
     //удалим класс неактивной кнопки
     setSubmitButtonState(true, popup);
     //откроем попап
-    popupOpen(popup);
+    //popupOpen(popup);
+    const openPopup = new Popup(popup);
+    openPopup.open();
+    openPopup.setEventListeners(popupCloseButton);
+    // openPopup.setEventListeners();
 
     //добавим вызов функции закрытия по оверлею
-    popupOverlayClose(popup);
+   // popupOverlayClose(popup);
 
 });
 
 //закрываем попап редактирования профиля
-popupCloseButton.addEventListener('click', () => {
-    popupClose(popup);
-});
+// popupCloseButton.addEventListener('click', () => {
+//     const closePopup = new Popup(popup);
+//     closePopup.close();
+// });
 
 //открываем попап добавления фото
 addButton.addEventListener('click', () => {
@@ -141,21 +150,37 @@ addButton.addEventListener('click', () => {
      //делаем кнопку неактивной
      setSubmitButtonState(false, popupAdd);
     //открываем
-    popupOpen(popupAdd);
+    // popupOpen(popupAdd);
+    const openPopup = new Popup(popupAdd);
+    
+    openPopup.open();
+    openPopup.setEventListeners(popupAddCloseButton);
     //добавим вызов функции закрытия по оверлею
-    popupOverlayClose(popupAdd);
+  //  popupOverlayClose(popupAdd);
 });
 
 //закрываем попап добавления фото
-popupAddCloseButton.addEventListener('click', () => {
-        popupClose(popupAdd);
-    });
+// popupAddCloseButton.addEventListener('click', () => {
+//         popupClose(popupAdd);
+//     });
 
 //листенер отправки формы
 formElement.addEventListener('submit', profileForm);
 
 //отправка формы карточки с фото
-addFormElement.addEventListener('submit', addNewCards);
+ addFormElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const newCard = 
+        [{
+        name: cardTitleNew.value,
+        link: cardLinkNew.value
+        }];
+
+    
+    addNewCards(newCard)
+  //  addNewCards.renderItems();
+ });
 
 //слушатель закрытия превью
 popupPreviewCloseButton.addEventListener('click', popupPreviewClose);
