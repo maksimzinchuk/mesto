@@ -1,50 +1,56 @@
+import { popupCloseButton } from './index.js'
+
 export default class Popup {
     constructor(popupSelector) {
         this._popupSelector = document.querySelector(popupSelector);
+        
+       // this.popupCloseButton = this._popupSelector.querySelector(popupCloseButton)
     }
 
     open() {
         this._popupSelector.classList.add('popup__opened');
-        // this.setEventListeners();
-        document.addEventListener('keydown', () => { this._handleEscClose() });
-        
+        document.addEventListener('keydown', this._handleEscClose);
+        document.addEventListener('click', this._handleOverlayClose);
         
     }
 
     close() {
-        
+       
         this._popupSelector.classList.remove('popup__opened');
-        document.removeEventListener('keydown', () => { this._handleEscClose() });
+        document.removeEventListener('keydown', this._handleEscClose);
         
     }
 
-    _handleEscClose() {
-        const press = event.key;
-        if (press !== 'Escape') {
-            return;
-        }
-        console.log('tets')
+    _handleEscClose = () => {
+        
+       if (event.key !== 'Escape'){
+           return;
+       }
+       
       
-        this.close();
-       
+        this.close()
+       console.log('esc')
+        
     }
 
-    _handleOverlayClose() {
-
+    _handleOverlayClose = () => {
+        if (event.target.classList.contains('popup__opened')) {
+            this.close();
+        }
     }
 
-    // _removeEventListeners() {
-    //     document.removeEventListener('keydown', (evt) => {
-    //         this._handleEscClose(evt);
+
+    setEventListeners() {
+        popupCloseButton.addEventListener('click', () => { 
+            this.close();
+            
+        });
+      
            
-    //   });
-    // }
-
-    setEventListeners(popupCloseButton) {
-    //     this._popupSelector.querySelector('.popup__close-button').addEventListener('click', () => {
-    //        this.close();
-    //    })
        
-        popupCloseButton.addEventListener('click', () => { this.close() })
+       
     }
+
+
+
 }

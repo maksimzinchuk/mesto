@@ -1,20 +1,20 @@
 import Card from './Card.js';
 import Section from './Section.js'
-import Popup from './Popup.js'
+import PopupWithForm from './PopupWithForm.js'
 import FormValidator from './FormValidator.js';
 import { popupPreviewClose} from './utils.js';
 import { validationConfig } from './config.js'
 import { initialCards } from './initial-cards.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelector('.popup__close-button');
+export const popupCloseButton = document.querySelector('.popup__close-button');
 
 const addButton = document.querySelector('.profile__add-button');
 const popupAddCloseButton = document.querySelector('.popup-add__close-button');
 
 const popup = '.popup'; 
 const popupAdd = '.popup-add'; 
-
+export const popupOpened = 'popup__opened';
 //для превью
 
 const popupPreviewCloseButton = document.querySelector('.image-preview__close-button');
@@ -66,37 +66,37 @@ function setSubmitButtonState(isFormValid, formEntity) {
   }
 }
 
-//функция заполнения формы профиля
-function profileForm (evt) {
-    evt.preventDefault();
+// //функция заполнения формы профиля
+// function profileForm (evt) {
+//     evt.preventDefault();
      
-    userName.textContent = userNameEdit.value;
-    userLabel.textContent = userLabelEdit.value;
+//     userName.textContent = userNameEdit.value;
+//     userLabel.textContent = userLabelEdit.value;
    
 
-    //закроем попап
-    popupClose(popup);
-}
+//     //закроем попап
+//     popupClose(popup);
+// }
 
 
-function addNewCards(newCard) {
-        const cardItem = new Section({items: newCard, renderer: (item) => {
+// function addNewCards(newCard) {
+//         const cardItem = new Section({items: newCard, renderer: (item) => {
 
-        const card = new Card(item, '.cards');
-        //гененрируем готовую карточку
-        const cardElement = card.generateCard();
-        //отображаем
-        cardItem.addItem(cardElement);
+//         const card = new Card(item, '.cards');
+//         //гененрируем готовую карточку
+//         const cardElement = card.generateCard();
+//         //отображаем
+//         cardItem.addItem(cardElement);
         
-        //выключаем попап
-        popupClose(popupAdd);
+//         //выключаем попап
+//         popupClose(popupAdd);
         
-}
-}, elementsSection);
+// }
+// }, elementsSection);
 
- cardItem.renderItems();
+//  cardItem.renderItems();
 
-}
+// }
 
 //теперь идут вызовы функций
 //вызов функции построения карточкек и массива initialCards
@@ -126,10 +126,18 @@ profileEditButton.addEventListener('click', () => {
     //удалим класс неактивной кнопки
     setSubmitButtonState(true, popup);
     //откроем попап
+    const popupOpen = new PopupWithForm({callback: (inputValues) => {
+        console.log(inputValues)
+        
+    }} , popup );
+    popupOpen.open();
+    popupOpen.setEventListeners();
+    //popupOpen.setEventListeners();
+
     //popupOpen(popup);
-    const openPopup = new Popup(popup);
-    openPopup.open();
-    openPopup.setEventListeners(popupCloseButton);
+    // const openPopup = new Popup(popup);
+    // openPopup.open();
+    //openPopup.setEventListeners();
     // openPopup.setEventListeners();
 
     //добавим вызов функции закрытия по оверлею
@@ -151,10 +159,37 @@ addButton.addEventListener('click', () => {
      setSubmitButtonState(false, popupAdd);
     //открываем
     // popupOpen(popupAdd);
-    const openPopup = new Popup(popupAdd);
+    // const openPopup = new Popup(popupAdd);
     
-    openPopup.open();
-    openPopup.setEventListeners(popupAddCloseButton);
+    const popupOpen = new PopupWithForm({ callback: () => {
+        const newCard = 
+         [{
+         name: cardTitleNew.value,
+         link: cardLinkNew.value
+         }];
+        const cardItem = new Section({items: newCard, renderer: (item) => {
+
+                     const card = new Card(item, '.cards');
+                     //гененрируем готовую карточку
+                    const cardElement = card.generateCard();
+                     //отображаем
+                     cardItem.addItem(cardElement);
+                              //выключаем попап
+        // popupClose(popupAdd);
+        
+ }
+ }, elementsSection);
+    } }, popupAdd)
+
+    popupOpen.open();
+
+  //  popupOpen.setEventListeners();
+
+   
+
+    
+    // openPopup.open();
+    //openPopup.setEventListeners();
     //добавим вызов функции закрытия по оверлею
   //  popupOverlayClose(popupAdd);
 });
@@ -165,22 +200,22 @@ addButton.addEventListener('click', () => {
 //     });
 
 //листенер отправки формы
-formElement.addEventListener('submit', profileForm);
+// formElement.addEventListener('submit', profileForm);
 
 //отправка формы карточки с фото
- addFormElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+//  addFormElement.addEventListener('submit', (evt) => {
+//     evt.preventDefault();
 
-    const newCard = 
-        [{
-        name: cardTitleNew.value,
-        link: cardLinkNew.value
-        }];
+//     const newCard = 
+//         [{
+//         name: cardTitleNew.value,
+//         link: cardLinkNew.value
+//         }];
 
     
-    addNewCards(newCard)
-  //  addNewCards.renderItems();
- });
+//     addNewCards(newCard)
+//   //  addNewCards.renderItems();
+//  });
 
 //слушатель закрытия превью
 popupPreviewCloseButton.addEventListener('click', popupPreviewClose);
