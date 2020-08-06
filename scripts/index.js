@@ -7,7 +7,7 @@ import { validationConfig } from './config.js'
 import { initialCards } from './initial-cards.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
-export const popupCloseButton = document.querySelector('.popup__close-button');
+export const popupCloseButton = '.popup__close-button';
 
 const addButton = document.querySelector('.profile__add-button');
 const popupAddCloseButton = document.querySelector('.popup-add__close-button');
@@ -79,24 +79,26 @@ function setSubmitButtonState(isFormValid, formEntity) {
 // }
 
 
-// function addNewCards(newCard) {
-//         const cardItem = new Section({items: newCard, renderer: (item) => {
-
-//         const card = new Card(item, '.cards');
-//         //гененрируем готовую карточку
-//         const cardElement = card.generateCard();
-//         //отображаем
-//         cardItem.addItem(cardElement);
+function addNewCards(newCard) {
+        const cardItem = new Section({items: newCard, renderer: (item) => {
+            
+        const card = new Card(item, '.cards');
         
-//         //выключаем попап
-//         popupClose(popupAdd);
+        //гененрируем готовую карточку
+        const cardElement = card.generateCard();
         
-// }
-// }, elementsSection);
+        //отображаем
+        cardItem.addItem(cardElement);
+        
+        //выключаем попап
+      //  popupClose(popupAdd);
+        
+}
+}, elementsSection);
 
-//  cardItem.renderItems();
+ cardItem.renderItems();
 
-// }
+}
 
 //теперь идут вызовы функций
 //вызов функции построения карточкек и массива initialCards
@@ -127,8 +129,11 @@ profileEditButton.addEventListener('click', () => {
     setSubmitButtonState(true, popup);
     //откроем попап
     const popupOpen = new PopupWithForm({callback: (inputValues) => {
-        console.log(inputValues)
+       // console.log(inputValues)
+        userName.textContent = inputValues.name;
+        userLabel.textContent = inputValues.label;
         
+
     }} , popup );
     popupOpen.open();
     popupOpen.setEventListeners();
@@ -154,34 +159,24 @@ profileEditButton.addEventListener('click', () => {
 //открываем попап добавления фото
 addButton.addEventListener('click', () => {
     //сбрасываем состояние до исходного
-    addFormElement.reset();
+   // addFormElement.reset();
      //делаем кнопку неактивной
      setSubmitButtonState(false, popupAdd);
     //открываем
     // popupOpen(popupAdd);
     // const openPopup = new Popup(popupAdd);
     
-    const popupOpen = new PopupWithForm({ callback: () => {
-        const newCard = 
-         [{
-         name: cardTitleNew.value,
-         link: cardLinkNew.value
-         }];
-        const cardItem = new Section({items: newCard, renderer: (item) => {
-
-                     const card = new Card(item, '.cards');
-                     //гененрируем готовую карточку
-                    const cardElement = card.generateCard();
-                     //отображаем
-                     cardItem.addItem(cardElement);
-                              //выключаем попап
-        // popupClose(popupAdd);
+    const popupOpen = new PopupWithForm({ callback: (inputValues) => {
+       // console.log(inputValues)
+        const inputValuesToArray = [inputValues]
         
- }
- }, elementsSection);
+        addNewCards(inputValuesToArray);
+       // addNewCards.renderItems();
+
     } }, popupAdd)
 
     popupOpen.open();
+    popupOpen.setEventListeners();
 
   //  popupOpen.setEventListeners();
 
