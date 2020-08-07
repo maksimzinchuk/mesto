@@ -11,14 +11,17 @@
 Использованные технологии: grid, flexbox, javascript, adaptive/responsive верстка.
 
 **Сборка проекта**
+```
 npm install
 ```
 
 ## Компиляция для разработки
+```
 npm run dev
 ```
 
 ## Компиляция для продакшн
+```
 npm run build
 ```
 
