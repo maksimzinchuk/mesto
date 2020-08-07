@@ -29,7 +29,6 @@ export default class FormValidator {
           });    
     }
 
-
     //функция проверяет, есть ли невалидные поля 
     _hasInvalidInput(formInputList) {
         //пройдемся по массиву инпутов методом some

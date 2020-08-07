@@ -1,39 +1,34 @@
-import { previewOpen } from './utils.js';
-
 export default class Card {
-     constructor(data, cardSelector) {
-        this._name = data.name;
+     constructor( data, cardSelector, { handleCardClick }) {
+        this._name = data.title;
         this._link = data.link;
+        this._handleCardClick = handleCardClick;
         this._cardSelector = cardSelector; //записали селектор в приватное поле
      }
 
     //установим обработчики событий
     _setEventListeners() {
         //слушатель кнопки лайк
-         this._element.querySelector('.elements__like').addEventListener('click', () => {
+        this._element.querySelector('.elements__like').addEventListener('click', () => {
              this._likeButtonClick();
-         });
-         //слушатель кнопки удаления
-         this._element.querySelector('.elements__trash').addEventListener('click', () => {
+        });
+        //слушатель кнопки удаления
+        this._element.querySelector('.elements__trash').addEventListener('click', () => {
             this._deleteButtonClick();
-         });
-         //слушатель превью
-         this._element.querySelector('.elements__image').addEventListener('click', () => {
-            this._previewClick();
-         });
-     }
+        });
+        //слушатель превью
+        this._element.querySelector('.elements__image').addEventListener('click', () => {
+           this._handleCardClick(this._element);
+        });
+    }
      
-     _likeButtonClick() {
+    _likeButtonClick() {
          this._element.querySelector('.elements__like').classList.toggle('elements__like_active');
-     }
+    }
      
-     _deleteButtonClick() {
+    _deleteButtonClick() {
         this._element.remove();
-     }
-   
-     _previewClick() {
-         previewOpen(this._link, this._name);
-     }
+    }
 
     //тут вернем разметку из template
     _getTemplate() {
