@@ -1,6 +1,6 @@
 # Проектная работа 8: Mesto
 
-Ссылка на проект: https://maksimzinchuk.github.io/mesto/index.html
+Ссылка на проект: https://maksimzinchuk.github.io/mesto/src/index.html
 
 **Готовая работа седьмого спринта**
 
