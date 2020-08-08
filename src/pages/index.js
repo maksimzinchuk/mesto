@@ -25,31 +25,12 @@ import { profileEditButton,
 
 //объявляем функции
 
-//подключаем валидацию форм
-(function enableValidation() {
-    //подключим валидацию профиля
-    const editFormValidation = new FormValidator(validationConfig, formElement);
-    editFormValidation.enableValidation();
-    //подключим валидацию добавления фото
-    const addFormValidation = new FormValidator(validationConfig, addFormElement);
-    addFormValidation.enableValidation();
-})();
-
-//функция задает начальные значения кнопок submit 
-function setSubmitButtonState(isFormValid, formEntity) {
-    // console.log(document.querySelector(formEntity).closest('form__submit'))
-    const formElement = document.querySelector(formEntity)
-    const buttonElement = formElement.querySelector('.form__submit');
-
-    if (isFormValid) {
-        buttonElement.removeAttribute('disabled');
-        buttonElement.classList.remove('form__submit_inactive');
-    }
-    else {
-        buttonElement.setAttribute('disabled', true);
-        buttonElement.classList.add('form__submit_inactive');
-  }
-}
+//подключим валидацию профиля, создаем новый экземпляр класса FromValidator
+const editFormValidation = new FormValidator(validationConfig, formElement);
+editFormValidation.enableValidation();
+//подключим валидацию добавления фото, создаем новый экземпляр класса FromValidator
+const addFormValidation = new FormValidator(validationConfig, addFormElement);
+addFormValidation.enableValidation();
 
 //создаем новый экземпляр класса превью картинки
 const popupOpen = new PopupWithImage(popupPreview);
@@ -111,7 +92,7 @@ profileEditButton.addEventListener('click', () => {
     //сделаем кнопку активной в этом попапе при загрузке
     //найдем в текущей форме кнопку submit формы
     //удалим класс неактивной кнопки
-    setSubmitButtonState(true, popup);
+    editFormValidation.setSubmitButtonState(false);
     //откроем попап
     popupProfile.open();
 });
@@ -119,7 +100,7 @@ profileEditButton.addEventListener('click', () => {
 //открываем попап добавления фото
 addButton.addEventListener('click', () => {
      //делаем кнопку неактивной
-     setSubmitButtonState(false, popupAdd);
+     editFormValidation.setSubmitButtonState(true);
      //открываем
      popupAddOpen.open();
 });

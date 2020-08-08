@@ -7,6 +7,7 @@ export default class FormValidator {
       this._inputErrorClass = data.inputErrorClass;
       this._errorClass = data.errorClass;
       this._validatingForm = validatingForm;
+      this._buttonElement = this._validatingForm.querySelector('.form__submit');
     }
 
      //эта функция удаляет ошибки, если пользователь закрывает попап
@@ -43,19 +44,22 @@ export default class FormValidator {
 
     //функция стилизации кнопки
     //принимает на вход поля инпут и кнопку submit
-    _toggleButtonState(formInputList, buttonElement) {
-      //проверяем, есть ли некорректные поля
-      if (this._hasInvalidInput(formInputList)) {
-          //если есть - делаем кнопку неактивной
-          buttonElement.classList.add('form__submit_inactive');
-          buttonElement.setAttribute('disabled', true);
-       }
+    _toggleButtonState(formInputList) {
+      //проверим поля на валидность
+      const inputCheck = this._hasInvalidInput(formInputList);
+      //и результат отправим в setSubmitButtonState
+      this.setSubmitButtonState(inputCheck);
+    }
 
-      //если нет - делаем снова активной
+    setSubmitButtonState(inputCheck) {
+      if (!inputCheck) {
+        this._buttonElement.classList.remove('form__submit_inactive');
+        this._buttonElement.removeAttribute('disabled');
+      }
       else {
-          buttonElement.removeAttribute('disabled');
-          buttonElement.classList.remove('form__submit_inactive');
-        }
+        this._buttonElement.classList.add('form__submit_inactive');
+        this._buttonElement.setAttribute('disabled', true);
+      }
     }
 
     _formShowError(fieldSelector, validatingInput, errorMessage, inputErrorClass, errorClass) {
@@ -97,9 +101,9 @@ export default class FormValidator {
 
     _setEventListeners() {
       const inputList = Array.from(this._validatingForm.querySelectorAll(this._inputSelector));
-      const buttonElement = this._validatingForm.querySelector('.form__submit');
+      //const buttonElement = this._validatingForm.querySelector('.form__submit');
       //тут вызовем функцию проверки состояния кнопки, чтоб проверить состояние кнопки до загрузки страницы
-      this._toggleButtonState(inputList, buttonElement);
+      this._toggleButtonState(inputList);
       //отправим массив полей в функцию, проверяющую есть ли невалидные поля
       this._hasInvalidInput(inputList);
 
@@ -107,7 +111,7 @@ export default class FormValidator {
            validatingInput.addEventListener('input', () => {
               this._formValidation(validatingInput);
               //тут вызовем функцию toggleButtonState и передадим ей массив полей и кнопку
-              this._toggleButtonState(inputList, buttonElement);  
+              this._toggleButtonState(inputList);  
               this._hidePopupErrors(validatingInput)
             });
        });
