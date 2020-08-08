@@ -2,13 +2,13 @@
 @import url(./_name/popup-add__content_name.css);
 
 .popup-add__content {
-    width: 358px;
-    border-style: none;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+  width: 358px;
+  border-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 510px) {
-    .popup-add__content  {
-       width: 200px; 
-    }
+  .popup-add__content {
+    width: 200px;
+  }
 }

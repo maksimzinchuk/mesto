@@ -1,12 +1,11 @@
 .popup-add__content_link {
-    height: 27.34px;
-    margin: 0 auto 48px;
-    padding: 0;
+  height: 27.34px;
+  margin: 0 auto 48px;
+  padding: 0;
 }
 
-
 @media (max-width: 510px) {
-    .popup-add__content_link {
-       margin: 0 auto 36px; 
-    }
+  .popup-add__content_link {
+    margin: 0 auto 36px;
+  }
 }

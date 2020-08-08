@@ -100,7 +100,7 @@ profileEditButton.addEventListener('click', () => {
 //открываем попап добавления фото
 addButton.addEventListener('click', () => {
      //делаем кнопку неактивной
-     editFormValidation.setSubmitButtonState(true);
+     addFormValidation.setSubmitButtonState(true);
      //открываем
      popupAddOpen.open();
 });

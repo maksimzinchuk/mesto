@@ -1,7 +1,6 @@
 .form__submit_inactive {
-    color: #C4C4C4;
-    background: #FFFFFF;
-    border: 1px solid #C4C4C4;
-    box-sizing: border-box;
-
+  color: #c4c4c4;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
 }

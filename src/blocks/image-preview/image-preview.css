@@ -3,14 +3,14 @@
 @import url(./__title/image-preview__title.css);
 
 .image-preview {
-    /*фон попапа*/
-    background-color: rgba(0, 0, 0, 0.9);
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.4s linear;
-    pointer-events: none;
+  /*фон попапа*/
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s linear;
+  pointer-events: none;
 }

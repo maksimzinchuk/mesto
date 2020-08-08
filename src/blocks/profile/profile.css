@@ -6,34 +6,33 @@
 @import url(./__label/profile__label.css);
 
 .profile {
-    max-width: 882px;
-    min-height: 120px;
-    margin: 40px auto 51px;
-    display: flex;
+  max-width: 882px;
+  min-height: 120px;
+  margin: 40px auto 51px;
+  display: flex;
 }
 
 @media (max-width: 1024px) {
-    .profile {
-        margin: 40px 6.93359375vw 51px;
-    }
+  .profile {
+    margin: 40px 6.93359375vw 51px;
+  }
 }
 
 @media (max-width: 768px) {
-    .profile {
-        max-width: 714px;
-    }
+  .profile {
+    max-width: 714px;
+  }
 }
 
 @media (max-width: 750px) {
-    .profile {
-        flex-direction: column;
-    }
+  .profile {
+    flex-direction: column;
+  }
 }
 
-
 @media (max-width: 320px) {
-    .profile {
-        max-width: 282px;
-        margin: 42px auto 36px;
-    }
+  .profile {
+    max-width: 282px;
+    margin: 42px auto 36px;
+  }
 }

@@ -1,20 +1,19 @@
 .popup-add__container {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    width: 430px;
-    display: flex;
-    flex-direction: column;
-    
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  width: 430px;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 510px) {
-    .popup-add__container {
-        width: 240px;
-        margin-top: auto;
-    }
+  .popup-add__container {
+    width: 240px;
+    margin-top: auto;
+  }
 }

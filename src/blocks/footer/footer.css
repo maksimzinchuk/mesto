@@ -1,38 +1,37 @@
 @import url(./__copyright/footer__copyright.css);
 
 .footer {
-    max-width: 882px;
-    margin: 66px auto 0;
-    padding-bottom: 60px;
-    
+  max-width: 882px;
+  margin: 66px auto 0;
+  padding-bottom: 60px;
 }
 
 @media (max-width: 1024px) {
-    .footer {
-        margin: 60px 6.93359375vw 0;
-        max-width: 714px;
-        padding-bottom: 50px;
-    }
+  .footer {
+    margin: 60px 6.93359375vw 0;
+    max-width: 714px;
+    padding-bottom: 50px;
+  }
 }
 
 @media (max-width: 768px) {
-    .footer {
-        margin: 55px 3.515625vw 0;
-        max-width: 714px;
-        padding-bottom: 45px;
-    }
+  .footer {
+    margin: 55px 3.515625vw 0;
+    max-width: 714px;
+    padding-bottom: 45px;
+  }
 }
 
 @media (max-width: 640px) {
-    .footer {
-        max-width: 582px;
-    }
+  .footer {
+    max-width: 582px;
+  }
 }
 
 @media (max-width: 320px) {
-    .footer {
-        margin: 48px auto 0;
-        max-width: 282px;
-        padding-bottom: 36px;
-    }
+  .footer {
+    margin: 48px auto 0;
+    max-width: 282px;
+    padding-bottom: 36px;
+  }
 }

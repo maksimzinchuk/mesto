@@ -4,16 +4,15 @@
 @import url(./__title/popup__title.css);
 @import url(./__save-button/popup__save-button.css);
 
-
 .popup {
-    /*здесь задается затемненный фон попапа*/
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.4s linear;
-    pointer-events: none;
+  /*здесь задается затемненный фон попапа*/
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s linear;
+  pointer-events: none;
 }

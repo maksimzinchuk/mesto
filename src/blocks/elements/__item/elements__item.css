@@ -1,9 +1,9 @@
 .elements__item {
-    display: flex;
-    flex-direction: column;
-    width: 282px;
-    height: 361px;
-    border-radius: 10px;
-    background: #FFFFFF;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 282px;
+  height: 361px;
+  border-radius: 10px;
+  background: #ffffff;
+  position: relative;
 }

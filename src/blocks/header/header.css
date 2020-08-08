@@ -1,46 +1,43 @@
 @import url(./__logo/header__logo.css);
 
 .header {
-    max-width: 882px;
-    min-width: 320px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding-top: 45px;
+  max-width: 882px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-top: 45px;
 }
 
 .header::after {
-    content: '';
-    border: 1px solid #545454; 
-    max-width: 880px;
-    min-width: 318px;
-    opacity: 0.7;
-    margin-top: 40.6px;
+  content: "";
+  border: 1px solid #545454;
+  max-width: 880px;
+  min-width: 318px;
+  opacity: 0.7;
+  margin-top: 40.6px;
 }
 
 @media (max-width: 1024px) {
-    .header {
-        margin: 0 6.93359375vw; 
-        padding-top: 30px;
-    }
+  .header {
+    margin: 0 6.93359375vw;
+    padding-top: 30px;
+  }
 }
 
-
 @media (max-width: 768px) {
-    .header {
-        margin: 0 auto; 
-        padding-top: 35px;
-     }
+  .header {
+    margin: 0 auto;
+    padding-top: 35px;
+  }
 }
 
 @media (max-width: 320px) {
-    .header {
-        padding-top: 28px;
-    }
+  .header {
+    padding-top: 28px;
+  }
 
-    .header::after {
-        margin-top: 31.6px;
-    }
-
+  .header::after {
+    margin-top: 31.6px;
+  }
 }
-
