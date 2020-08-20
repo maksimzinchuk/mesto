@@ -1,0 +1,12 @@
+.profile__wrapper:hover {
+  background-image: url(./../../../images/avatarEdit.svg);
+  background-size: 26px 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media (max-width: 750px) {
+  .profile__wrapper {
+    margin: 0 auto;
+  }
+}

@@ -9,7 +9,6 @@ export default class Section {
     // для каждого элемента из массива
     this._renderedItems.forEach((item) => {
       //используем переданную в конструктор функцию рендерер
-
       this._renderer(item);
     });
   }

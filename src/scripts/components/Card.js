@@ -1,40 +1,76 @@
 export default class Card {
-  constructor(data, cardSelector, { handleCardClick }) {
-    this._name = data.title;
+  constructor(
+    data,
+    cardSelector,
+    { handleCardClick, handleDeletePopup, handleLikePut, handleLikeDelete }
+  ) {
+    this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
     this._handleCardClick = handleCardClick;
+    this._handleDeletePopup = handleDeletePopup;
+    this._handleLikePut = handleLikePut;
+    this._handleLikeDelete = handleLikeDelete;
     this._cardSelector = cardSelector; //записали селектор в приватное поле
+    this._element = this._getTemplate();
+    this._elementImage = this._element.querySelector(".elements__image");
+    this._elementLike = this._element.querySelector(".elements__like");
+    this._elementTrash = this._element.querySelector(".elements__trash");
+    this._elementLikeNumber = this._element.querySelector(
+      ".elements__like-number"
+    );
+    this._elementTitle = this._element.querySelector(".elements__title");
   }
 
   //установим обработчики событий
   _setEventListeners() {
     //слушатель кнопки лайк
-    this._element
-      .querySelector(".elements__like")
-      .addEventListener("click", () => {
-        this._likeButtonClick();
-      });
+    this._elementLike.addEventListener("click", () => {
+      this._likeHandler();
+    });
     //слушатель кнопки удаления
-    this._element
-      .querySelector(".elements__trash")
-      .addEventListener("click", () => {
-        this._deleteButtonClick();
-      });
+
+    this._elementTrash.addEventListener("click", () => {
+      // this._deleteButtonClick();
+      this._handleDeletePopup();
+    });
     //слушатель превью
-    this._element
-      .querySelector(".elements__image")
-      .addEventListener("click", () => {
-        this._handleCardClick(this._element);
-      });
+    this._elementImage.addEventListener("click", () => {
+      this._handleCardClick(this._element);
+    });
   }
 
-  _likeButtonClick() {
-    this._element
-      .querySelector(".elements__like")
-      .classList.toggle("elements__like_active");
+  //метод проверяет, стоит ли лайк, и если нет - позволяет поставить его и наоборот
+  _likeHandler() {
+    if (this._elementLike.classList.contains("elements__like_active")) {
+      this._handleLikeDelete();
+    } else {
+      this._handleLikePut();
+    }
   }
 
-  _deleteButtonClick() {
+  //метод увлеличивает количество лайков в DOM
+  likeCounterPlus() {
+    this._elementLikeNumber.textContent++;
+  }
+
+  //метод уменьшает количество лайков в DOM
+  likeCounterMinus() {
+    this._elementLikeNumber.textContent--;
+  }
+
+  //добавляем активный лайк
+  likeAdd() {
+    this._elementLike.classList.add("elements__like_active");
+  }
+
+  //и удаляем его
+  likeRemove() {
+    this._elementLike.classList.remove("elements__like_active");
+  }
+
+  //удаляем карточку
+  deleteElement() {
     this._element.remove();
   }
 
@@ -48,17 +84,18 @@ export default class Card {
   }
 
   generateCard() {
-    //запишем разметку в приватное поле _element для доступа других элементов
-    this._element = this._getTemplate();
-    //найдем в DOM elements__image
-    const elementsImage = this._element.querySelector(".elements__image");
     //добавим обработчики событий
     this._setEventListeners();
 
     //заносим данные
-    this._element.querySelector(".elements__title").textContent = this._name;
-    elementsImage.src = this._link;
-    elementsImage.alt = this._name;
+    this._elementTitle.textContent = this._name;
+    this._elementImage.src = this._link;
+    this._elementImage.alt = this._name;
+
+    //отобразим количество лайков
+    this._element.querySelector(
+      ".elements__like-number"
+    ).textContent = this._likes.length;
 
     //вернем готовый элемент
     return this._element;

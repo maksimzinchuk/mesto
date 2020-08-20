@@ -1,14 +1,12 @@
 .profile__avatar {
-  background-image: url(./../../../images/avatar.jpg);
-  background-size: contain;
-  background-repeat: no-repeat;
   height: 120px;
   width: 120px;
-  border-radius: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: opacity ease-in 0.2s;
 }
 
-@media (max-width: 750px) {
-  .profile__avatar {
-    margin: 0 auto;
-  }
+.profile__avatar:hover {
+  opacity: 0.2;
+  cursor: pointer;
 }

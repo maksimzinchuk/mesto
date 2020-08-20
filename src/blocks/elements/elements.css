@@ -4,6 +4,7 @@
 @import url(./__like/elements__like.css);
 @import url(./__trash/elements__trash.css);
 @import url(./__title-container/elements__title-container.css);
+@import url(./__like-number/elements__like-number.css);
 
 .elements {
   display: grid;

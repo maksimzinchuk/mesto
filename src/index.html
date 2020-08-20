@@ -13,15 +13,17 @@
 
       <main class="content">
         <section class="profile">
-          <div class="profile__avatar"></div>
+          <div class="profile__wrapper">
+            <img src="#" alt="#" class="profile__avatar profile__reset" />
+          </div>
 
           <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button
               class="profile__edit-button profile__reset"
               type="button"
             ></button>
-            <p class="profile__label">Исследователь океана</p>
+            <p class="profile__label"></p>
           </div>
 
           <button
@@ -55,7 +57,7 @@
               class="popup__profile popup__profile_label form__input"
               minlength="2"
               maxlength="200"
-              name="label"
+              name="about"
               required
             />
             <span class="form__input-error"></span>
@@ -71,7 +73,7 @@
           <div class="form__field">
             <input
               class="popup-add__content popup-add__content_name form__input"
-              name="title"
+              name="name"
               placeholder="Название"
               minlength="1"
               maxlength="30"
@@ -101,6 +103,34 @@
         </div>
       </div>
 
+      <div class="popup-delete">
+        <div class="popup-delete__container">
+          <button class="popup__close-button" type="button"></button>
+          <h2 class="popup-delete__title">Вы уверены?</h2>
+          <button class="popup-delete__button">Да</button>
+        </div>
+      </div>
+
+      <div class="popup-avatar">
+        <form class="popup-avatar__container form" novalidate>
+          <button class="popup__close-button" type="button"></button>
+          <h2 class="popup-avatar__title">Обновить аватар</h2>
+          <div class="form__field">
+            <input
+              class="popup-avatar__content popup-avatar__content_link form__input"
+              name="link"
+              placeholder="Ссылка на аватар"
+              type="url"
+              required
+            />
+            <span class="form__input-error"></span>
+          </div>
+          <button class="popup-avatar__save-button form__submit">
+            Сохранить
+          </button>
+        </form>
+      </div>
+
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
@@ -112,7 +142,10 @@
         <div class="elements__trash"></div>
         <div class="elements__title-container">
           <h2 class="elements__title"></h2>
-          <button class="elements__like" type="button"></button>
+          <div class="elements__like-wrapper">
+            <button class="elements__like" type="button"></button>
+            <p class="elements__like-number"></p>
+          </div>
         </div>
       </div>
     </template>

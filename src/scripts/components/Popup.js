@@ -20,6 +20,10 @@ export default class Popup {
     document.removeEventListener("click", this._handleOverlayClose);
   }
 
+  renderLoading(isLoading) {
+    this._popupSelector.querySelector(".form__submit").textContent = isLoading;
+  }
+
   _handleEscClose = () => {
     if (event.key !== "Escape") {
       return;

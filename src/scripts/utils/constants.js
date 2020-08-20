@@ -3,9 +3,13 @@ const popupCloseButton = ".popup__close-button";
 
 const addButton = document.querySelector(".profile__add-button");
 
+const avatarImage = document.querySelector(".profile__avatar");
+
 const popup = ".popup";
 const popupAdd = ".popup-add";
 const popupOpened = "popup__opened";
+const popupAvatar = ".popup-avatar";
+
 //для превью
 const popupPreview = ".image-preview";
 const popupPreviewImage = ".image-preview__item";
@@ -16,6 +20,7 @@ const userName = document.querySelector(".profile__name");
 const userLabel = document.querySelector(".profile__label");
 const userNameEdit = document.querySelector(".popup__profile_name");
 const userLabelEdit = document.querySelector(".popup__profile_label");
+const userAvatar = document.querySelector(".profile__avatar");
 
 //переменная для поиска секции elements для добавления новых фото
 const elementsSection = ".elements";
@@ -25,6 +30,9 @@ const formElement = document.querySelector(".popup__container");
 
 //форма попапа добавления фото
 const addFormElement = document.querySelector(".popup-add__container");
+
+//форма попапа изменения аватара
+const avatarFormElement = document.querySelector(".popup-avatar__container");
 
 //конфиг настроек с селекторами
 const validationConfig = {
@@ -36,39 +44,13 @@ const validationConfig = {
   errorClass: "form__type-error",
 };
 
-//массив катрочек с фото
-const initialCards = [
-  {
-    title: "Архыз",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+const apiOptions = {
+  url: "https://mesto.nomoreparties.co/v1/cohort-14",
+  headers: {
+    authorization: "53f63733-0798-40e6-804e-4dfb424b0ce2",
+    "Content-Type": "application/json",
   },
-  {
-    title: "Челябинская область",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    title: "Иваново",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    title: "Камчатка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    title: "Холмогорский район",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    title: "Байкал",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+};
 
 export {
   profileEditButton,
@@ -82,11 +64,15 @@ export {
   popupPreviewTitle,
   userName,
   userLabel,
+  userAvatar,
   userNameEdit,
   userLabelEdit,
   elementsSection,
   formElement,
   addFormElement,
   validationConfig,
-  initialCards,
+  popupAvatar,
+  avatarImage,
+  avatarFormElement,
+  apiOptions,
 };

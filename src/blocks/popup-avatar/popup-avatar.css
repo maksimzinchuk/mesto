@@ -1,0 +1,17 @@
+@import url(./__container/popup-avatar__container.css);
+@import url(./__content/popup-avatar__content.css);
+@import url(./__save-button/popup-avatar__save-button.css);
+@import url(./__title/popup-avatar__title.css);
+
+.popup-avatar {
+  /*здесь задается затемненный фон попапа*/
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s linear;
+  pointer-events: none;
+}

@@ -1,0 +1,16 @@
+@import url(./__button/popup-delete__button.css);
+@import url(./__title/popup-delete__title.css);
+@import url(./__container/popup-delete__container.css);
+
+.popup-delete {
+  /*здесь задается затемненный фон попапа*/
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s linear;
+  pointer-events: none;
+}

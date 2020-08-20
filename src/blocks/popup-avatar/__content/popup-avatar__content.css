@@ -1,0 +1,13 @@
+@import url(./_link/popup-avatar__content_link.css);
+
+.popup-avatar__content {
+  width: 358px;
+  border-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 510px) {
+  .popup-avatar__content {
+    width: 200px;
+  }
+}
