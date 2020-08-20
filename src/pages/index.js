@@ -1,13 +1,13 @@
 import "./../pages/index.css"; //импорт стилей для webpack
 
-import Card from "./../scripts/components/Card.js";
-import Section from "./../scripts/components/Section.js";
-import PopupWithForm from "./../scripts/components/PopupWithForm.js";
-import PopupWithImage from "./../scripts/components/PopupWithImage.js";
-import PopupWithDelete from "./../scripts/components/PopupWithDelete.js";
-import UserInfo from "./../scripts/components/UserInfo.js";
-import FormValidator from "./../scripts/components/FormValidator.js";
-import Api from "./../scripts/components/Api.js";
+import Card from "./../components/Card.js";
+import Section from "./../components/Section.js";
+import PopupWithForm from "./../components/PopupWithForm.js";
+import PopupWithImage from "./../components/PopupWithImage.js";
+import PopupWithDelete from "./../components/PopupWithDelete.js";
+import UserInfo from "./../components/UserInfo.js";
+import FormValidator from "./../components/FormValidator.js";
+import Api from "./../components/Api.js";
 import {
   profileEditButton,
   addButton,
@@ -27,10 +27,11 @@ import {
   avatarImage,
   avatarFormElement,
   apiOptions,
-} from "./../scripts/utils/constants.js";
+} from "./../utils/constants.js";
 
 //переменная для массива и для использования вне разных функций
 let buildCardsFromArray = "";
+let userId = '';
 
 //создаем экземпляр класса Api
 const api = new Api(apiOptions);
@@ -59,6 +60,8 @@ popupOpen.setEventListeners();
 api
   .getUserData()
   .then((data) => {
+    //запишем id в глобальную переменную
+    userId = data._id;
     userProfile.setUserInfo(data);
   })
   .catch((err) => {
@@ -88,7 +91,7 @@ const createCard = (item) => {
     },
     handleDeletePopup: () => {
       deletePopup.open();
-      deletePopup.setEventListeners();
+     
     },
     handleLikePut: () => {
       api
@@ -125,36 +128,31 @@ const createCard = (item) => {
           .deleteCard(item._id)
           .then(() => {
             card.deleteElement();
+            deletePopup.close();
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
-          })
-          .finally(() => {
-            deletePopup.close();
-          });
+          })  
       },
     },
     ".popup-delete"
   );
+  
 
   //проверяем, чья карточка и оставляем кнопку удаления только на своих
-  api
-    .getUserData()
-    .then((data) => {
-      if (item.owner._id != data._id) {
+ const ownerCheck = () => {
+      if (item.owner._id != userId) {
         newCard.querySelector(".elements__trash").remove();
       }
 
       //если стоит мой лайк - подсвечиваем сердечко
       item.likes.forEach((like) => {
-        if (like._id == data._id) {
+        if (like._id === userId) {
           card.likeAdd();
         }
       });
-    })
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    });
+    }
+ownerCheck();
   //используем новый экземпляр класса Section для отображения
   buildCardsFromArray.addItem(newCard);
 };
@@ -187,13 +185,11 @@ const popupProfile = new PopupWithForm(
         .saveUserData(inputValues)
         .then((res) => {
           userProfile.setUserInfo(res);
+          popupProfile.renderLoading("Сохранить");
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
         })
-        .finally(() => {
-          popupProfile.renderLoading("Сохранить");
-        });
     },
   },
   popup
@@ -211,13 +207,11 @@ const popupAddOpen = new PopupWithForm(
         .addCard(inputs)
         .then((res) => {
           createCard(res);
+          popupAddOpen.renderLoading("Создать");
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
         })
-        .finally(() => {
-          popupAddOpen.renderLoading("Создать");
-        });
     },
   },
   popupAdd
@@ -234,13 +228,11 @@ const popupAvatarEdit = new PopupWithForm(
         .then((res) => {
           //отправим данные в отображения в DOM
           userProfile.setUserInfo(res);
+          popupAvatarEdit.renderLoading("Сохранить");
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
         })
-        .finally(() => {
-          popupAvatarEdit.renderLoading("Сохранить");
-        });
     },
   },
   popupAvatar
@@ -251,8 +243,9 @@ popupAvatarEdit.setEventListeners();
 //открываем попап редактирования профиля и заполняем поля
 profileEditButton.addEventListener("click", () => {
   //получаем данные пользователя из экземпляра класса UserInfo для подстановки при открытии попапа
-  userNameEdit.value = userProfile.getUserInfo().name;
-  userLabelEdit.value = userProfile.getUserInfo().about;
+  const userInfo = userProfile.getUserInfo()
+  userNameEdit.value = userInfo.name;
+  userLabelEdit.value = userInfo.about;
 
   //сделаем кнопку активной в этом попапе при загрузке
   //найдем в текущей форме кнопку submit формы
@@ -277,3 +270,4 @@ avatarImage.addEventListener("click", () => {
   //открываем
   popupAvatarEdit.open();
 });
+
