@@ -1,32 +1,14 @@
 import Popup from "./Popup.js";
 
-export default class PopupWithForm extends Popup {
-  constructor({ handleDelete }, popupSelector) {
+export default class PopupWithDelete extends Popup {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._handleDelete = handleDelete;
   }
 
-
-  open() {
-    super.open();
-    this.setEventListeners();
-  }
-
-  _deleteCard = () => {
-    this._handleDelete();
-    this._resetEventListeners();
-  };
-
-  setEventListeners() {
-    super.setEventListeners();
+  setSubmitAction(func) {
+    this._callback = func;
     this._popupSelector
-      .querySelector(".popup-delete__button")
-      .addEventListener("click", this._deleteCard);
-  }
-
-  _resetEventListeners() {
-    this._popupSelector
-      .querySelector(".popup-delete__button")
-      .removeEventListener("click", this._deleteCard);
+    .querySelector(".popup-delete__button")
+    .addEventListener("click", this._callback);
   }
 }

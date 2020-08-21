@@ -32,6 +32,7 @@ import {
 //переменная для массива и для использования вне разных функций
 let buildCardsFromArray = "";
 let userId = '';
+let cardId = '';
 
 //создаем экземпляр класса Api
 const api = new Api(apiOptions);
@@ -90,8 +91,20 @@ const createCard = (item) => {
       popupOpen.open(item.name, item.link);
     },
     handleDeletePopup: () => {
+      cardId = item._id
       deletePopup.open();
-     
+      deletePopup.setSubmitAction(() => {
+        api
+          .deleteCard(item._id)
+          .then(() => {
+            card.deleteElement();
+          })
+          .catch((err) => {
+            console.log(err); // выведем ошибку в консоль
+          }).finally(() => {
+            deletePopup.close();
+          }) 
+      })
     },
     handleLikePut: () => {
       api
@@ -120,23 +133,7 @@ const createCard = (item) => {
   //генерируем готовую разметку карточки
   const newCard = card.generateCard();
 
-  //создаем экземпляр класса попапа удаления карточки
-  const deletePopup = new PopupWithDelete(
-    {
-      handleDelete: () => {
-        api
-          .deleteCard(item._id)
-          .then(() => {
-            card.deleteElement();
-            deletePopup.close();
-          })
-          .catch((err) => {
-            console.log(err); // выведем ошибку в консоль
-          })  
-      },
-    },
-    ".popup-delete"
-  );
+
   
 
   //проверяем, чья карточка и оставляем кнопку удаления только на своих
@@ -189,7 +186,9 @@ const popupProfile = new PopupWithForm(
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
-        })
+        }).finally(() => {
+          popupProfile.close();
+        })  
     },
   },
   popup
@@ -211,7 +210,9 @@ const popupAddOpen = new PopupWithForm(
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
-        })
+        }).finally(() => {
+          popupAddOpen.close();
+        })  
     },
   },
   popupAdd
@@ -232,7 +233,9 @@ const popupAvatarEdit = new PopupWithForm(
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
-        })
+        }).finally(() => {
+          popupAvatarEdit.close();
+        })  
     },
   },
   popupAvatar
@@ -271,3 +274,9 @@ avatarImage.addEventListener("click", () => {
   popupAvatarEdit.open();
 });
 
+  //создаем экземпляр класса попапа удаления карточки
+  const deletePopup = new PopupWithDelete(
+    
+    ".popup-delete"
+  );
+  deletePopup.setEventListeners();
