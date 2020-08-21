@@ -1,6 +1,6 @@
 # Проектная работа 9: Mesto
 
-Ссылка на проект: https://maksimzinchuk.github.io/mesto/index.html - но нужно собирать на локальной машине, ссылка уже не активна
+Ссылка на проект: https://maksimzinchuk.github.io/mesto/index.html
 
 **Готовая работа девятого спринта**
 
